@@ -1,0 +1,25 @@
+name: Deploy Cloudflare Workers
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  deploy:
+    name: Deploy ${{ matrix.project }}
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        project: [group-propics]
+
+    steps:
+      - name: Checkout current repo
+        uses: actions/checkout@v2
+
+      - name: Publish Cloudflare Worker
+        uses: cloudflare/wrangler-action@1.3.0
+        with:
+          apiToken: ${{ secrets.CF_API_TOKEN }}
+          workingDirectory: ${{ matrix.project }}
+          preCommands: wrangler build
