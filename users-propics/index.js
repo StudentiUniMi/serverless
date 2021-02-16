@@ -32,7 +32,7 @@ async function handleRequest(request) {
             return new Response(null, {status: 204})
         }
 
-        let latestPictureId = profilePictures.result.photos.shift().pop().file_id;
+        let latestPictureId = profilePictures.result.photos.shift().shift().file_id;
         let file = await tgReq("getFile", { "file_id": latestPictureId });
         let photo = await fetch("https://api.telegram.org/file/bot" + BOT_TOKEN + "/" + file.result.file_path);
         let resp = new Response(photo.body, {status: 200});

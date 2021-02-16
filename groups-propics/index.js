@@ -28,7 +28,7 @@ async function handleRequest(request) {
 
     try {
         let chatInfo = await tgReq("getChat", { "chat_id": chatID });
-        let file = await tgReq("getFile", { "file_id": chatInfo.result.photo.big_file_id });
+        let file = await tgReq("getFile", { "file_id": chatInfo.result.photo.small_file_id });
         let photo = await fetch("https://api.telegram.org/file/bot" + BOT_TOKEN + "/" + file.result.file_path);
         let resp = new Response(photo.body, { status: 200 });
         await cache.put(request, resp.clone());
