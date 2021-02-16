@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        project: [groups-propics]
+        project: [groups-propics, users-propics]
 
     steps:
       - name: Checkout current repo
