@@ -1,4 +1,4 @@
-# Serverless functions for StudentiUnimi
+# Serverless functions for StudentiUnimi [![Deploy to Cloudflare Workers](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/StudentiUnimi/serverless)
 Questa repository raccoglie le __funzioni serverless__ utilizzate dai servizi di StudentiUnimi.
 Sono deployate regolarmente su [Cloudflare Workers](https://workers.cloudflare.com) per via 
 del generoso piano gratuito offerto.
