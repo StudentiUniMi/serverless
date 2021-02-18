@@ -24,7 +24,7 @@ async function handleRequest(request) {
     const { searchParams } = new URL(request.url);
     let chatID = searchParams.get("chat_id");
     if (!chatID || chatID === "")
-        return new Response(JSON.stringify({ ok: false, error: "No chat_id specified" }), { status: 400 });
+        chatID = request.url.split("/").pop().replace(".png", "")
 
     try {
         let chatInfo = await tgReq("getChat", { "chat_id": chatID });
@@ -32,6 +32,7 @@ async function handleRequest(request) {
         let photo = await fetch("https://api.telegram.org/file/bot" + BOT_TOKEN + "/" + file.result.file_path);
         let resp = new Response(photo.body, { status: 200 });
         resp.headers.set("Cache-Control", "public, max-age=86400");
+        resp.headers.set("Content-Type", "image/png");
         await cache.put(request, resp.clone());
         return resp;
     } catch (error) {

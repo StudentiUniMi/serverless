@@ -24,19 +24,19 @@ async function handleRequest(request) {
     const {searchParams} = new URL(request.url);
     let userID = searchParams.get("user_id");
     if (!userID || userID === "")
-        return new Response(JSON.stringify({ok: false, error: "No user_id specified"}), {status: 400});
+        userID = request.url.split("/").pop().replace(".png", "")
 
     try {
         let profilePictures = await tgReq("getUserProfilePhotos", {"user_id": userID});
-        if (profilePictures.result.total_count < 1) {
+        if (profilePictures.result.total_count < 1)
             return new Response(null, {status: 204})
-        }
 
         let latestPictureId = profilePictures.result.photos.shift().shift().file_id;
         let file = await tgReq("getFile", { "file_id": latestPictureId });
         let photo = await fetch("https://api.telegram.org/file/bot" + BOT_TOKEN + "/" + file.result.file_path);
         let resp = new Response(photo.body, {status: 200});
         resp.headers.set("Cache-Control", "public, max-age=86400");
+        resp.headers.set("Content-Type", "image/png");
         await cache.put(request, resp.clone());
         return resp;
     } catch (error) {
