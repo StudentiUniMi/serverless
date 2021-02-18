@@ -40,6 +40,6 @@ async function handleRequest(request) {
         await cache.put(request, resp.clone());
         return resp;
     } catch (error) {
-        return new Response(JSON.stringify({ok: false, error: "Bad user_id" + error.toString()}), {status: 403});
+        return new Response(JSON.stringify({ok: false, error: "Bad user_id"}), {status: 403});
     }
 }
